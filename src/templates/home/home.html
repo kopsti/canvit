@@ -1,0 +1,140 @@
+{% extends 'home/base.html' %}
+{% load cloudinary %}
+{% load blog_tags %}
+{% load business_tags %}
+
+{% block head %}{{ domain }}{% endblock %}
+
+{% block logo %}<span class="logo">{% cloudinary "logo.png" %}</span>{% endblock %}
+
+{% block title %}<h1>{{ domain }}</h1>{% endblock %}
+
+{% block subtitle %}
+
+  <section>
+    <p>
+      {{ description }}
+      <br>
+      <br>
+      <br>
+      <a href="http://www.epu.ntua.gr/" target=blank>
+        <span class="logo">{% cloudinary "epu-ntua.png" %}</span>
+      </a>
+    </p>
+  </section>
+
+{% endblock %}
+
+{% block content %}
+
+  <section id="intro" class="main special">
+    <div class="spotlight">
+      <div class="content">
+        <header class="major">
+          <h2>How it works</h2>
+        </header>
+        <p>{{ hi }}</p>
+      </div>
+      <span class="image">{% cloudinary "how-it-works.png" %}</span>
+    </div>
+  </section>
+
+  <section id="companies" class="main special">
+    <header class="major">
+      <h2>Companies</h2>
+    </header>
+    {% get_companies 3 as companies %}
+    <ul class="features">
+      {% for company in companies %}
+        <li>
+          <span class="rounded-img med">
+            <a class="no-border" href="{{ company.get_absolute_url }}">{% cloudinary company.logo %}</a>
+          </span>
+          <h3><a href="{{ company.get_absolute_url }}">{{ company }}</a></h3>
+          <p>
+            <i class="fa fa-calendar" aria-hidden="true"></i> {{ company.published.date }}
+            <i class="fa fa-user" aria-hidden="true"></i> <a href="{{ company.author.profile.get_absolute_url }}">{{ company.author }}</a>
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
+    <footer class="major">
+      <ul class="actions">
+        <li><a href="{% url 'business:company_list' %}" class="button">More</a></li>
+      </ul>
+    </footer>
+  </section>
+
+  <section id="tools" class="main special">
+    {% get_tool_categories as tool_categories %}
+
+    {% for category in tool_categories %}
+
+      {% get_tools category "" "" 3 as tools %}
+
+      <section class="main special">
+        <header class="major">
+          <h2>{{ category }}</h2>
+        </header>
+
+        <ul class="features">
+          {% for tool in tools %}
+            <li>
+              <span class="rounded-img med">
+                <a class="no-border" href="{{ tool.get_absolute_url }}">{% cloudinary tool.company.logo %}</a>
+              </span>
+              <h3><a href="{{ tool.get_absolute_url }}">{{ tool }}</a></h3>
+              <p>
+                <i class="fa fa-calendar" aria-hidden="true"></i> {{ tool.published.date }}
+                <i class="fa fa-user" aria-hidden="true"></i> <a href="{{ tool.author.profile.get_absolute_url }}">{{ tool.author }}</a>
+              </p>
+            </li>
+          {% endfor %}
+        </ul>
+
+        <footer class="major">
+          <ul class="actions">
+            <li><a href="{{ category.get_absolute_url }}" class="button">More</a></li>
+          </ul>
+        </footer>
+
+      </section>
+
+    {% endfor %}
+
+  </section>
+
+  <section id="blog" class="main special">
+
+    {% get_posts  3 as posts %}
+
+    <section class="main special">
+
+      <header class="major">
+        <h2>Latest Posts</h2>
+      </header>
+
+      <ul class="features">
+        {% for post in posts %}
+          <li>
+            <span class="rounded-img med">
+              <a class="no-border" href="{{ post.get_absolute_url }}">{% cloudinary post.featured_image %}</a>
+            </span>
+            <h3><a href="{{ post.get_absolute_url }}">{{ post }}</a></h3>
+            <p><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.published.date }}</p>
+            <p>{{ post.text|truncatewords:10 }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+
+      <footer class="major">
+        <ul class="actions">
+          <li><a href="{% url 'blog:post_list' %}" class="button">More</a></li>
+        </ul>
+      </footer>
+
+    </section>
+
+  </section>
+
+{% endblock %}

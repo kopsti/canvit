@@ -1,0 +1,32 @@
+{% load comments %}
+{% load comments_xtd %}
+{% load cloudinary %}
+
+<ul id="comments" class="media-list">
+  {% for comment in comment_list %}
+  <li class="media">
+    <a name="c{{ comment.id }}"></a>
+    <div class="media-left">
+      {% if comment.user.profile.avatar %}
+        <span class="rounded-img small">{% cloudinary comment.user.profile.avatar %}</span>
+      {% else %}
+        {{ comment.user_email|xtd_comment_gravatar }}
+      {% endif %}
+    </div>
+    <div class="media-body">
+      <div class="comment">
+        <h6 class="media-heading">
+          {{ comment.submit_date }} |  <a href="{{ comment.user.profile.get_absolute_url }}">{{ comment.user }}</a>
+        </h6>
+        {% if comment.is_removed %}
+          <p>This comment has been removed.</p>
+        {% else %}
+        <p>
+          {% include "includes/django_comments_xtd/comment_content.html" with content=comment.comment %}
+        </p>
+        {% endif %}
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+</ul>

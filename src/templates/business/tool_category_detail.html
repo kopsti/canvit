@@ -1,0 +1,65 @@
+{% extends 'business/base.html' %}
+{% load cloudinary %}
+{% load staticfiles %}
+
+{% block head %}{{ category }}{% endblock %}
+
+{% block logo %}{% endblock %}
+
+{% block title %}<h1>{{ category }}</h1>{% endblock %}
+
+{% block subtitle %}
+
+  <section>
+    <p>All</p>
+    <span class="bars">
+      {% include 'html/sort.html' %}
+      {% include 'html/search.html' %}
+    </span>
+  </section>
+
+{% endblock %}
+
+{% block content %}
+
+  <section id="content" class="main">
+
+    <div class="infinite-container">
+      {% for tool in tools %}
+        <div class="infinite-item">
+          <div class="object">
+            <h3><a href="{{ tool.get_absolute_url }}">{{ tool }}</a></h3>
+            <div class="well well-sm">
+              <span><i class="fa fa-calendar" aria-hidden="true"></i> {{ tool.published.date }} | <i class="fa fa-user" aria-hidden="true"></i> <a href="{{ tool.company.author.profile.get_absolute_url }}">{{ tool.company.author }}</a></span>
+              {% if tool.company.ratings.get.average %}
+                <span class="pull-right"><i class="fa fa-star" aria-hidden="true"></i>{{ tool.company.ratings.get.average|floatformat:"-2" }}</span>
+              {% endif %}
+            </div>
+            <div>
+              <span class="object-img  rounded-img med">
+                {% cloudinary tool.company.logo %}
+              </span>
+              <p>{{ category }} for the company <a href="{{ tool.company.get_absolute_url }}">{{ tool.company }}</a></p>
+              <a class="btn btn-info" href="{{ tool.get_absolute_url }}">More</a></p>
+            </div>
+          </div>
+        </div>
+        <hr>
+        {% empty %}
+        <p class="lead">No tools found.</p>
+      {% endfor %}
+    </div>
+
+    <div class="loading" style="display: none;">
+      Loading...
+    </div>
+
+    {% if page_obj.has_next %}
+      <a class="infinite-more-link" href="?page={{ page_obj.next_page_number }}">More</a>
+    {% endif %}
+
+    <script src="{% static 'js/infinite.js' %}"></script>
+
+  </section>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends 'user_profile/base.html' %}
+{% load cloudinary %}
+{% load business_tags %}
+
+{% block head %}{{ profile }}{% endblock %}
+
+{% block logo %}
+
+  {% if profile.avatar %}
+    <span class="rounded-img large">{% cloudinary profile.avatar %}</span>
+  {% endif %}
+
+{% endblock %}
+
+{% block title %}<h1>{{ profile }}</h1>{% endblock %}
+
+{% block subtitle %}
+
+  {% if request.user == profile.user %}
+    <p>
+      <a class="btn btn-default" data-toggle="modal" href="{% url 'profile:profile_update' request.user.username %}" data-target="#profile-modal">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+      </a>
+    </p>
+  {% endif %}
+
+{% endblock %}
+
+{% block content %}
+
+  <section id="content" class="main">
+
+    <div class="jumbotron">
+      <h2 class="align-center">{{ profile.first_name }} {{ profile.last_name }}</h2>
+      <h3>{{ profile.description }}</h3>
+      {% if request.user == profile.user %}
+        <p><a class="btn btn-warning" href="{% url 'auth_password_change' %}">Change Password</a></p>
+      {% endif %}
+    </div>
+
+    <section class="main special">
+      {% get_companies as companies %}
+      <header class="major">
+        <h2>Companies</h2>
+      </header>
+      <ul class="features">
+        {% for company in companies %}
+          {% if company.author == profile.user %}
+            <li>
+              <span class="rounded-img med">
+                <a class="no-border" href="{{ company.get_absolute_url }}">{% cloudinary company.logo %}</a>
+              </span>
+              <h3><a href="{{ company.get_absolute_url }}">{{ company }}</a></h3>
+              <p>{{ company.published.date }}</p>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      <footer class="major">
+        <ul class="actions">
+          <li><a href="{% url 'business:company_author' user=profile %}" class="button">More</a></li>
+        </ul>
+      </footer>
+    </section>
+
+    {% get_tool_categories as tool_categories %}
+    {% for category in tool_categories %}
+    <section class="main special">
+      {% get_tools category profile.user "" 3 as tools %}
+      <header class="major">
+        <h2>{{ category }}</h2>
+      </header>
+      <ul class="features">
+        {% for tool in tools %}
+          <li>
+            <span  class="rounded-img med">
+              <a class="no-border" href="{{ tool.get_absolute_url }}">{% cloudinary tool.company.logo %}</a>
+            </span>
+            <h3><a href="{{ tool.get_absolute_url }}">{{ tool }}</a></h3>
+            <p>{{ tool.published.date }}</p>
+          </li>
+        {% endfor %}
+      </ul>
+      <footer class="major">
+        <ul class="actions">
+          <li><a href="{% url 'business:tool_author' category=category.slug user=profile.user %}" class="button">More</a></li>
+        </ul>
+      </footer>
+    </section>
+    {% endfor %}
+
+  </section>
+
+{% endblock %}

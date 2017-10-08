@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+{% load cloudinary %}
+
+{% block head %}{{ post }}{% endblock %}
+
+{% block title %}<h1>{{ post }}</h1>{% endblock %}
+
+{% block subtitle %}
+
+  <section>
+    <p>
+      <i class="fa fa-calendar" aria-hidden="true"></i> {{ post.published.date }}
+    </p>
+  </section>
+
+{% endblock %}
+
+{% block content %}
+
+  <section id="content" class="main">
+
+    <div class="feat-img">
+        {% cloudinary post.featured_image %}
+    </div>
+    <br>
+    <p>{{ post.text|linebreaksbr }}</p>
+
+  </section>
+
+{% endblock %}

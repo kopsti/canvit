@@ -1,0 +1,13 @@
+<div class="modal-header">
+  <h4 class="modal-title">Deleting {{ company }}</h4>
+</div>
+<div class="modal-body">
+  <p>Are you sure? This action can not be reverted!</p>
+  <form action="{% url 'business:company_delete' company=company.slug %}" method="POST">
+    {% csrf_token %}
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-danger">Yes</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    </div>
+  </form>
+</div>

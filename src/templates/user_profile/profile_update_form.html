@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h4 class="modal-title">Updating {{ profile }} info</h4>
+</div>
+<div class="modal-body">
+  <form action="{% url 'profile:profile_update' profile=profile.user.username %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </form>
+</div>

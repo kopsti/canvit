@@ -1,0 +1,116 @@
+{% extends 'business/base.html' %}
+{% load cloudinary %}
+{% load business_tags %}
+
+{% block head %}{{ tool }}{% endblock %}
+
+{% block logo %}{% endblock %}
+
+{% block title %}<h1>{{ tool }}</h1>{% endblock %}
+
+{% block subtitle %}
+
+  <section>
+
+    <section>
+      <a href="{{ tool.category.get_absolute_url }}">{{ tool.category }}</a> for
+      <a href="{{ tool.company.get_absolute_url }}">{{ tool.company }}</a>
+      <br>
+      <i class="fa fa-calendar" aria-hidden="true"></i> {{ tool.published.date }}
+      <br>
+      <i class="fa fa-user" aria-hidden="true"></i> <a href="{{ tool.author.profile.get_absolute_url }}">{{ tool.author }}</a>
+    </section>
+
+    {% if user == tool.author %}
+
+      <span>
+        <a class="btn btn-default" data-toggle="modal"
+        href="{% url 'business:tool_update' company=tool.company.slug category=tool.category.slug tool=tool.slug %}"
+        data-target="#tool-update-modal">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </a>
+
+        <a class="btn btn-danger" data-toggle="modal"
+        href="{% url 'business:tool_delete' company=tool.company.slug category=tool.category.slug tool=tool.slug %}"
+        data-target="#tool-delete-modal">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </a>
+      </span>
+
+    {% endif %}
+
+  </section>
+
+{% endblock %}
+
+{% block content %}
+
+  <script type="text/javascript">
+    $(function () {
+    $('[data-toggle="popover"]').popover()
+
+    $('.popover-dismiss').popover({
+      trigger: 'focus'
+    })
+    })
+  </script>
+
+  <section id="content" class="main">
+
+    {% get_fields tool as fields %}
+    {% for field in fields %}
+
+      <div>
+
+        <div class="rounded-img small centered">
+          <h3>
+            {% cloudinary field.icon %}
+            {{ field }}
+            <a class="no-border" tabindex="0" data-toggle="popover" data-trigger="focus" title="{{ field }}" data-content="{{ field.hint }}"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
+          </h3>
+        </div>
+
+        <div>
+
+          <ul class="ul-2">
+            {% get_entries field tool as entries %}
+            {% for entry in entries %}
+                <li class="li-2 entry">
+                  {{ entry }}
+                  {% if user == tool.author and user == entry.author %}
+                    <div class="pull-right">
+                      <a class="no-border" data-toggle="modal"
+                      href="{% url 'business:tool_entry_update' category=tool.category.slug tool=tool.slug field_pk=field.pk entry_pk=entry.pk %}"
+                      data-target="#tool-entry-update-modal">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                      </a>
+                      <a class="no-border" data-toggle="modal"
+                      href="{% url 'business:tool_entry_delete' category=tool.category.slug tool=tool.slug field_pk=field.pk entry_pk=entry.pk %}"
+                      data-target="#tool-entry-delete-modal"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                    </div>
+                  {% endif %}
+                </li>
+            {% endfor %}
+          </ul>
+
+          </div>
+
+          {% if user == tool.author %}
+            <span>
+              <a class="no-border" data-toggle="modal"
+              href="{% url 'business:tool_entry_create' category=tool.category.slug tool=tool.slug field_pk=field.pk %}"
+              data-target="#tool-entry-modal">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+              </a>
+            </span>
+          {% endif %}
+
+          <hr>
+
+        </div>
+
+      {% endfor %}
+
+    </section>
+
+{% endblock %}

@@ -1,0 +1,133 @@
+{% extends 'business/base.html' %}
+{% load cloudinary %}
+{% load business_tags %}
+{% load ratings %}
+{% load comments %}
+
+{% block head %}{{ company }}{% endblock %}
+
+{% block logo %}<span class="rounded-img large">{% cloudinary company.logo %}</span>{% endblock %}
+
+{% block title %}<h1>{{ company }}</h1>{% endblock %}
+
+{% block subtitle %}
+
+  <section>
+
+    <section>
+      <i class="fa fa-calendar" aria-hidden="true"></i> {{ company.published.date }}
+      <br>
+      <i class="fa fa-user" aria-hidden="true"></i> <a href="{{ company.author.profile.get_absolute_url }}">{{ company.author }}</a>
+    </section>
+
+    {% if user == company.author %}
+
+      <span>
+        <a class="btn btn-default" data-toggle="modal"
+        href="{% url 'business:company_update' company=company.slug %}"
+        data-target="#company-update-modal">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </a>
+        <a class="btn btn-danger" data-toggle="modal"
+        href="{% url 'business:company_delete' company=company.slug %}"
+        data-target="#company-delete-modal">
+          <i class="fa fa-trash" aria-hidden="true"></i>
+        </a>
+      </span>
+
+    {% endif %}
+
+  </section>
+
+{% endblock %}
+
+{% block content %}
+
+  <section id="content" class="main">
+
+    <div>
+      <h3>Company Info</h3>
+      <p>{{ company.section }}</p>
+      <p>{{ company.description }}</p>
+      <div class="w100 block">
+        <div id="links">
+        <div>
+          <i class="fa fa-wikipedia-w" aria-hidden="true"></i>
+          {% if company.wiki %}
+            <a href="{{ company.wiki }}" target=blank>Wikipedia</a>
+            {% else %}
+              -
+            {% endif %}
+        </div>
+        <div>
+          <i class="fa fa-external-link" aria-hidden="true"></i>
+          {% if company.url %}
+            <a href="{{ company.url }}"  target=blank>Website</a>
+            {% else %}
+              -
+            {% endif %}
+        </div>
+        </div>
+        <div class="pull-right centered">
+          <p>{% ratings object %}</p>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div>
+
+      {% get_tool_categories as tool_categories %}
+      {% for category in tool_categories %}
+        <div class="centered">
+          <h3>
+            {{ category }}
+            {% if user == company.author %}
+              <a class="no-border" data-toggle="modal" href="{% url 'business:tool_create' company=company.slug category=category.slug %}" data-target="#tool-modal">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+              </a>
+            {% endif %}
+          </h3>
+        </div>
+        <ul class="ul-2 centered">
+        {% get_tools category "" company as tools %}
+        {% for tool in tools %}
+          <li class="li-2"><a href="{{ tool.get_absolute_url }}">{{ tool }}</a></li>
+        {% endfor %}
+        </ul>
+        <hr>
+      {% endfor %}
+
+    </div>
+
+    <div id="comments">
+      {% get_comment_count for object as comment_count %}
+      <h5 class="text-center">
+      {% if comment_count == 1 %}
+        There is {{ comment_count }} comment below.
+      {% else %}
+        There are {{ comment_count }} comments below.
+      {% endif %}
+      </h5>
+
+      {% if comment_count %}
+      <div id="comment-list">
+        {% render_comment_list for object %}
+      </div>
+      {% endif %}
+
+      {% if request.user.is_authenticated %}
+      <div class="comment">
+        <H4 class="text-center">Post your comment</H4>
+        <div class="well">
+          {% render_comment_form for object %}
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+
+  </section>
+
+{% endblock %}

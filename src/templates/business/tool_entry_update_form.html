@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h4 class="modal-title">Updating {{ toolentry.tool }} entry</h4>
+</div>
+<div class="modal-body">
+  <form action="{% url 'business:tool_entry_update' category=toolentry.tool.category.slug tool=toolentry.tool.slug field_pk=toolentry.field.pk entry_pk=toolentry.pk %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </form>
+</div>

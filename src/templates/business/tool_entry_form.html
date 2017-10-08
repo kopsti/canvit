@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <h4 class="modal-title">Creating {{ tool }} entry</h4>
+</div>
+<div class="modal-body">
+  <form action="{% url 'business:tool_entry_create' category=category.slug tool=tool.slug field_pk=field.pk %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-success">Save</button>
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+  </form>
+</div
