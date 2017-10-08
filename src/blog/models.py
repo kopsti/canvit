@@ -1,5 +1,4 @@
 from canvit.utils import unique_slug_generator
-from cloudinary.models import CloudinaryField
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.db.models.signals import pre_save
@@ -12,7 +11,7 @@ class Post(models.Model):
     status          = models.CharField(max_length=1, choices=STATUS_CHOICES, default='p')
     title           = models.CharField(max_length=200)
     slug            = models.SlugField(blank=True, editable=False)
-    featured_image  = CloudinaryField('image')
+    featured_image  = models.ImageField(null=True, blank=True, upload_to='images/')
     text            = models.TextField()
     published       = models.DateTimeField(auto_now_add=True)
     updated         = models.DateTimeField(auto_now=True)

@@ -1,5 +1,4 @@
 from canvit.utils import unique_slug_generator
-from cloudinary.models import CloudinaryField
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -10,7 +9,7 @@ class Profile(models.Model):
     slug        = models.SlugField(blank=True, editable=False)
     first_name  = models.CharField(max_length=200, blank=True)
     last_name   = models.CharField(max_length=200, blank=True)
-    avatar      = CloudinaryField('image')
+    avatar      = models.ImageField(null=True, blank=True, upload_to='images/')
     description = models.TextField(blank=True)
 
     def get_absolute_url(self):
