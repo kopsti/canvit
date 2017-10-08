@@ -5,7 +5,11 @@
 
 {% block head %}{{ company }}{% endblock %}
 
-{% block logo %}<span class="rounded-img large">{% cloudinary company.logo %}</span>{% endblock %}
+{% block logo %}
+  {% if company.logo %}
+    <span class="rounded-img large"><img src="{{ company.logo.url }}"></span>
+  {% endif %}
+{% endblock %}
 
 {% block title %}<h1>{{ company }}</h1>{% endblock %}
 

@@ -35,9 +35,11 @@
               {% endif %}
             </div>
             <div>
+              {% if company.logo %}
               <span class="object-img  rounded-img med">
-                {% cloudinary company.logo %}
+                <img src="{{ company.logo.url }}">
               </span>
+              {% endif %}
               <p>Involved in {{ company.section }}</p>
               <p>{{ company.description|truncatewords:30 }}
               <a class="btn btn-info" href="{{ company.get_absolute_url }}">More</a></p>

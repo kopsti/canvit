@@ -4,7 +4,9 @@
 
 {% block head %}{{ domain }}{% endblock %}
 
-{% block logo %}<span class="logo">{% cloudinary "logo.png" %}</span>{% endblock %}
+{% block logo %}
+  <span class="logo"><img src="" alt=""></span>
+{% endblock %}
 
 {% block title %}<h1>{{ domain }}</h1>{% endblock %}
 
@@ -13,12 +15,6 @@
   <section>
     <p>
       {{ description }}
-      <br>
-      <br>
-      <br>
-      <a href="http://www.epu.ntua.gr/" target=blank>
-        <span class="logo">{% cloudinary "epu-ntua.png" %}</span>
-      </a>
     </p>
   </section>
 
@@ -34,7 +30,7 @@
         </header>
         <p>{{ hi }}</p>
       </div>
-      <span class="image">{% cloudinary "how-it-works.png" %}</span>
+      <span class="image"><img src="" alt=""></span>
     </div>
   </section>
 
@@ -46,9 +42,11 @@
     <ul class="features">
       {% for company in companies %}
         <li>
-          <span class="rounded-img med">
-            <a class="no-border" href="{{ company.get_absolute_url }}">{% cloudinary company.logo %}</a>
-          </span>
+          {% if company.logo %}
+            <span class="rounded-img med">
+              <a class="no-border" href="{{ company.get_absolute_url }}"><img src="{{ company.logo.url }}"></a>
+            </span>
+          {% endif %}
           <h3><a href="{{ company.get_absolute_url }}">{{ company }}</a></h3>
           <p>
             <i class="fa fa-calendar" aria-hidden="true"></i> {{ company.published.date }}
@@ -79,9 +77,11 @@
         <ul class="features">
           {% for tool in tools %}
             <li>
-              <span class="rounded-img med">
-                <a class="no-border" href="{{ tool.get_absolute_url }}">{% cloudinary tool.company.logo %}</a>
-              </span>
+              {% if tool.company.logo %}
+                <span class="rounded-img med">
+                  <a class="no-border" href="{{ tool.get_absolute_url }}"><img src="{{ tool.company.logo.url }}"></a>
+                </span>
+              {% endif %}
               <h3><a href="{{ tool.get_absolute_url }}">{{ tool }}</a></h3>
               <p>
                 <i class="fa fa-calendar" aria-hidden="true"></i> {{ tool.published.date }}
@@ -116,9 +116,11 @@
       <ul class="features">
         {% for post in posts %}
           <li>
-            <span class="rounded-img med">
-              <a class="no-border" href="{{ post.get_absolute_url }}">{% cloudinary post.featured_image %}</a>
-            </span>
+            {% if post.featured_image %}
+              <span class="rounded-img med">
+                <a class="no-border" href="{{ post.get_absolute_url }}"><img src="{{ post.featured_image.url }}"></a>
+              </span>
+            {% endif %}
             <h3><a href="{{ post.get_absolute_url }}">{{ post }}</a></h3>
             <p><i class="fa fa-calendar" aria-hidden="true"></i> {{ post.published.date }}</p>
             <p>{{ post.text|truncatewords:10 }}</p>

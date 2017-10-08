@@ -7,7 +7,7 @@
     <a name="c{{ comment.id }}"></a>
     <div class="media-left">
       {% if comment.user.profile.avatar %}
-        <span class="rounded-img small">{% cloudinary comment.user.profile.avatar %}</span>
+        <span class="rounded-img small"><img src="{{ comment.user.profile.avatar.url }}"></span>
       {% else %}
         {{ comment.user_email|xtd_comment_gravatar }}
       {% endif %}

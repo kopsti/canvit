@@ -31,9 +31,11 @@
               </div>
 
               <div>
+                {% if post.featured_image %}
                 <span class="object-img  rounded-img med">
-                  {% cloudinary post.featured_image %}
+                  <img src="{{ post.featured_image.url }}">
                 </span>
+                {% endif %}
                 <p>{{ post.text|truncatewords:30 }}</p>
                 <a class="btn btn-info" href="{{ post.get_absolute_url }}">More</a></p>
               </div>

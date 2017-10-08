@@ -6,7 +6,7 @@
 {% block logo %}
 
   {% if author.profile.avatar %}
-    <span class="rounded-img large">{% cloudinary author.profile.avatar %}</span>
+    <span class="rounded-img large"><img src="{{ author.profile.avatar.url }}"></span>
   {% endif %}
 
 {% endblock %}
@@ -41,9 +41,11 @@
               {% endif %}
             </div>
             <div>
+              {% if tool.company.logo %}
               <span class="object-img  rounded-img med">
-                {% cloudinary tool.company.logo %}
+                <img src="{{ tool.company.logo.url }}">
               </span>
+              {% endif %}
               <p>{{ category }} for the company <a href="{{ tool.company.get_absolute_url }}">{{ tool.company }}</a></p>
               <a class="btn btn-info" href="{{ tool.get_absolute_url }}">More</a></p>
             </div>

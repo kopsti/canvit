@@ -124,16 +124,10 @@ if os.environ.get('PROD'):
     # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
     LANGUAGE_CODE = 'en-us'
-
     TIME_ZONE = 'UTC'
-
     USE_I18N = True
-
     USE_L10N = True
-
     USE_TZ = True
-
-    SITE_ID = 1
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/1.11/howto/static-files/
@@ -179,7 +173,6 @@ if os.environ.get('PROD'):
     }
 
     # SSL/TLS settings
-
     CORS_REPLACE_HTTPS_REFERER      = True
     HOST_SCHEME                     = "https://"
     SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -190,4 +183,13 @@ if os.environ.get('PROD'):
     SECURE_HSTS_SECONDS             = 1000000
     SECURE_FRAME_DENY               = True
 
+    # App settings
+    SITE_ID = 1
+    ACCOUNT_ACTIVATION_DAYS = 3
     COMMENTS_APP = 'django_comments_xtd'
+
+    EMAIL_USE_TLS = True
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = 'canvitapp@gmail.com'
+    EMAIL_HOST_PASSWORD = 'f,krik694'
+    EMAIL_PORT = 587

@@ -18,9 +18,12 @@
 
   <section id="content" class="main">
 
-    <div class="feat-img">
-        {% cloudinary post.featured_image %}
-    </div>
+    {% if post.featured_image %}
+      <div class="feat-img">
+        <img src="{{ post.featured_image.url }}">
+      </div>
+    {% endif %}
+
     <br>
     <p>{{ post.text|linebreaksbr }}</p>
 

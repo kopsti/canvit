@@ -6,7 +6,7 @@
 {% block logo %}
 
   {% if profile.avatar %}
-    <span class="rounded-img large">{% cloudinary profile.avatar %}</span>
+    <span class="rounded-img large"><img src="{{ profile.avatar.url }}"></span>
   {% endif %}
 
 {% endblock %}
@@ -46,9 +46,11 @@
         {% for company in companies %}
           {% if company.author == profile.user %}
             <li>
+              {% if company.logo %}
               <span class="rounded-img med">
-                <a class="no-border" href="{{ company.get_absolute_url }}">{% cloudinary company.logo %}</a>
+                <a class="no-border" href="{{ company.get_absolute_url }}"><img src="{{ company.logo.url }}"></a>
               </span>
+              {% endif %}
               <h3><a href="{{ company.get_absolute_url }}">{{ company }}</a></h3>
               <p>{{ company.published.date }}</p>
             </li>
@@ -72,9 +74,11 @@
       <ul class="features">
         {% for tool in tools %}
           <li>
+            {% if tool.company.logo %}
             <span  class="rounded-img med">
-              <a class="no-border" href="{{ tool.get_absolute_url }}">{% cloudinary tool.company.logo %}</a>
+              <a class="no-border" href="{{ tool.get_absolute_url }}"><img src="{{ tool.company.logo.url }}"></a>
             </span>
+            {% endif %}
             <h3><a href="{{ tool.get_absolute_url }}">{{ tool }}</a></h3>
             <p>{{ tool.published.date }}</p>
           </li>
