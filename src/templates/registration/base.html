@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <title>{% block head %}Head{% endblock %} | {{ domain }}</title>
+    <title>{% block head %}Head{% endblock %} | {{ site_title }}</title>
     {% load staticfiles %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"
@@ -30,7 +30,7 @@
 
       <footer id="footer">
 
-        <p class="copyright">&copy; {{ domain }}. Design: <a href="https://html5up.net" target=blank>HTML5 UP</a>.</p>
+        <p class="copyright">&copy; {{ site_title }}. Design: <a href="https://html5up.net" target=blank>HTML5 UP</a>.</p>
 
       </footer>
 

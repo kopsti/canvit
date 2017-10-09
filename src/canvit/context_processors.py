@@ -1,14 +1,22 @@
-def description(request):
-    return {
-        'description':"Create, Manage & Study Business Model Tools",
-    }
+from django.conf import settings
+from django.contrib.sites.models import Site
+from id.models import SiteID
 
-def domain(request):
-    return {
-        'domain':"canvit",
-    }
+def current_site(request):
+    try:
+        current_site = Site.objects.get_current()
+        site_title = Site.objects.get_current().site_id.title
+        site_description = Site.objects.get_current().site_id.description
+        return {
+            'current_site': current_site,
+            'site_title': site_title,
+            'site_description': site_description
+        }
+    except Site.DoesNotExist:
+        # always return a dict, no matter what!
+        return {'current_site':''} # an empty string
 
 def hi(request):
     return {
-    'hi':"Canvit is an application designed to help students design, study and manage their own Business Model Tools.",
+    'hi': "Canvit is an application designed to help students design, study and manage their own Business Model Tools.",
     }

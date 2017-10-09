@@ -1,4 +1,4 @@
-Activate account at {{ domain }}:
+Activate account at {{ site.domain }}:
 
 http://{{ site.domain }}{% url 'registration_activate' activation_key %}
 

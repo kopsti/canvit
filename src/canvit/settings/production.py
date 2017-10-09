@@ -41,6 +41,7 @@ if os.environ.get('PROD'):
         'django.contrib.staticfiles',
         'django_comments_xtd',
         'django_comments',
+        'id',
         'blog',
         'star_ratings',
         'home',
@@ -73,8 +74,7 @@ if os.environ.get('PROD'):
                     'django.template.context_processors.request',
                     'django.contrib.auth.context_processors.auth',
                     'django.contrib.messages.context_processors.messages',
-                    'canvit.context_processors.domain',
-                    'canvit.context_processors.description',
+                    'canvit.context_processors.current_site',
                     'canvit.context_processors.hi'
                 ],
             },

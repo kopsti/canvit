@@ -2,19 +2,19 @@
 {% load blog_tags %}
 {% load business_tags %}
 
-{% block head %}{{ domain }}{% endblock %}
+{% block head %}{{ site_title }}{% endblock %}
 
 {% block logo %}
   <span class="logo"><img src="" alt=""></span>
 {% endblock %}
 
-{% block title %}<h1>{{ domain }}</h1>{% endblock %}
+{% block title %}<h1>{{ site_title }}</h1>{% endblock %}
 
 {% block subtitle %}
 
   <section>
     <p>
-      {{ description }}
+      {{ site_description }}
     </p>
   </section>
 
