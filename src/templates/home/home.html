@@ -5,7 +5,11 @@
 {% block head %}{{ site_title }}{% endblock %}
 
 {% block logo %}
-  <span class="logo"><img src="" alt=""></span>
+  {% if site_logo %}
+    <span class="logo">
+      <img src="{{ site_logo.url }}">
+    </span>
+  {% endif %}
 {% endblock %}
 
 {% block title %}<h1>{{ site_title }}</h1>{% endblock %}
