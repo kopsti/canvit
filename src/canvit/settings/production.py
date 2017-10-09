@@ -180,6 +180,5 @@ if os.environ.get('PROD'):
     EMAIL_USE_TLS = True
     EMAIL_HOST = 'smtp.gmail.com'
     EMAIL_HOST_USER = 'canvitapp@gmail.com'
-    #EMAIL_HOST_PASSWORD = 'f,krik694'
     EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
     EMAIL_PORT = 587
