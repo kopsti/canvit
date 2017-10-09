@@ -16,7 +16,7 @@ def current_site(request):
             'site_logo': site_logo,
             'site_favicon': site_favicon,
         }
-    except Site.DoesNotExist:
+    except:
         # always return a dict, no matter what!
         return {'current_site':''} # an empty string
 
