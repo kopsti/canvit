@@ -13,7 +13,7 @@ django-registration==2.2
 django-smart-selects==1.5.2
 django-star-ratings==0.5.5
 django-storages==1.6.5
-djangorestframework==3.6.3
+djangorestframework==3.9.1
 docutils==0.13.1
 gunicorn==19.7.1
 idna==2.5
